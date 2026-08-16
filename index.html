@@ -1,1 +1,67 @@
-<!DOCTYPE html><html><body style="background:#000;color:white;text-align:center;font:20vw Arial"><div id=t>00:00</div><button onclick="p()">▶</button><button onclick="r()">R</button><script>s=0;function d(){t.innerHTML=String(s/60|0).padStart(2,0)+':'+String(s%60).padStart(2,0)}function p(){if(x)clearInterval(x),x=0;else x=setInterval(()=>{s++;d()},1000)}function r(){s=0;d()}d()</script></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{margin:0;background:#000;color:#fff;text-align:center;font-family:Arial}
+#t{font-size:22vw;margin-top:15vh}
+button{font-size:28px;padding:18px 28px;margin:8px;border-radius:12px}
+</style>
+</head>
+<body>
+
+<div id="t">00:00</div>
+
+<button onclick="start()">▶ INICIAR</button>
+<button onclick="pause()">⏸ PAUSAR</button>
+<button onclick="resume()">▶ RETOMAR</button>
+<button onclick="restart()">🔄 RESTART</button>
+
+<script>
+let s=0;
+let timer=null;
+
+function show(){
+ let m=Math.floor(s/60);
+ let sec=s%60;
+ document.getElementById("t").innerHTML=
+ String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0");
+}
+
+function start(){
+ if(timer===null){
+   s=0;
+   show();
+   timer=setInterval(function(){
+     s++;
+     show();
+   },1000);
+ }
+}
+
+function pause(){
+ if(timer!==null){
+   clearInterval(timer);
+   timer=null;
+ }
+}
+
+function resume(){
+ if(timer===null){
+   timer=setInterval(function(){
+     s++;
+     show();
+   },1000);
+ }
+}
+
+function restart(){
+ clearInterval(timer);
+ timer=null;
+ s=0;
+ show();
+}
+</script>
+
+</body>
+</html>
